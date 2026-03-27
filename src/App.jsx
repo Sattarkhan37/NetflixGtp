@@ -1,8 +1,14 @@
-import React from "react";
-import "./app.css";
-
-const App = () => {
-  return <div className="text-3xl font-bold text-red-500">Hello</div>;
-};
+import Header from "./components/Header";
+import Body from "./components/Body";
+import Loginn from "./components/Loginn";
+function App() {
+  return (
+    <div>
+      <Body />
+      <Header />
+      <Loginn />
+    </div>
+  );
+}
 
 export default App;
