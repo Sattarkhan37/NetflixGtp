@@ -1,6 +1,11 @@
+import { useState } from "react";
 import Header from "./Header";
 
 function Loginn() {
+  const [isSignIn, setIsSignIn] = useState(true);
+  const toggleSignInForm = () => {
+    setIsSignIn(!isSignIn);
+  };
   return (
     <div>
       <Header />
@@ -11,8 +16,15 @@ function Loginn() {
         />
       </div>
 
-      <form className="w-80 h-80 rounded-lg absolute p-16 z bg-black/70 my-5 mx-auto right-0 left-0 text-white  ">
-        <h1>Sign In</h1>
+      <form className="w-80 h-80% rounded-lg absolute p-14 z bg-black/70 my-5 mx-auto right-0 left-0 text-white  ">
+        <h1>{isSignIn ? "Sign In" : "Sign Up"}</h1>
+        {!isSignIn ? (
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="p-1 my-1 w-full bg-gray-800"
+          />
+        ) : null}
         <input
           type="text"
           placeholder="Email Address"
@@ -23,9 +35,22 @@ function Loginn() {
           placeholder="Password"
           className="p-1 my-1 w-full bg-gray-800"
         />
+        {!isSignIn && (
+          <input
+            type="text"
+            placeholder="Conform Password"
+            className="p-1 my-1 w-full bg-gray-800"
+          />
+        )}
+
         <button className="p-4 my-4 w-full bg-red-700  ">
-          Sign In
+          {isSignIn ? "Sign In" : "Sign Up"}
         </button>
+        <h3 className="py-0 cursor-pointer" onClick={toggleSignInForm}>
+          {isSignIn
+            ? "New to Netflix? Sign Up"
+            : "Already registered Sign In Now"}
+        </h3>
       </form>
     </div>
   );
