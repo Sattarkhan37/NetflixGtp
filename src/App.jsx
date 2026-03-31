@@ -5,8 +5,6 @@ function App() {
   return (
     <div>
       <Body />
-      <Header />
-      <Loginn />
     </div>
   );
 }
