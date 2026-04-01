@@ -11,7 +11,14 @@ node_modules
 dist
 dist-ssr
 *.local
-
+.agents/
+.claude/
+.agents/
+skills-lock.json
+.firebase/
+.trae/
+.claude/
+.agents/
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
