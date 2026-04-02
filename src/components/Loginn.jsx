@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/fireBase.js";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice.js";
 function Loginn() {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -30,13 +31,21 @@ function Loginn() {
         .then((userCredential) => {
           const user = userCredential.user;
 
-          updateProfile(user, {
+          return updateProfile(user, {
             displayName: name.current.value,
             photoURL: "https://avatars.githubusercontent.com/u/108258313?v=4",
           });
         })
         .then(() => {
-          // dispatch()
+          const { uid, email, displayName, photoURL } = auth.currentUser;
+          dispatch(
+            addUser({
+              uid: uid,
+              email: email,
+              displayName: displayName,
+              photoURL: photoURL,
+            }),
+          );
           navigate("/browse");
         })
         .catch((error) => {
