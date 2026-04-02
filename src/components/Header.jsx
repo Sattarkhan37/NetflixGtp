@@ -18,7 +18,7 @@ function Header() {
   };
   useEffect(() => {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
@@ -37,6 +37,7 @@ function Header() {
         navigate("/");
       }
     });
+    return () => unsubscribe();
   }, []);
   return (
     <div className="absolute z-50 px-8 py-2 bg-black/80 backdrop-blur-sm w-screen flex justify-between items-center">
