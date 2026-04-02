@@ -1,14 +1,19 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import { CheckValidData } from "../utils/validate";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/fireBase.js";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 function Loginn() {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
+  const name = useRef(null);
+  const dispatch = useDispatch();
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
   };
@@ -23,9 +28,19 @@ function Loginn() {
         password.current.value,
       )
         .then((userCredential) => {
-          // Signed up
           const user = userCredential.user;
-          console.log(user);
+
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/108258313?v=4",
+          });
+        })
+        .then(() => {
+          // dispatch()
+          navigate("/browse");
+        })
+        .catch((error) => {
+          setErrorMessage(error.message);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -42,6 +57,7 @@ function Loginn() {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -69,6 +85,7 @@ function Loginn() {
         <h1>{isSignIn ? "Sign In" : "Sign Up"}</h1>
         {!isSignIn ? (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-1 my-1 w-full bg-gray-800"
