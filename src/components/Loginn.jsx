@@ -46,7 +46,6 @@ function Loginn() {
               photoURL: photoURL,
             }),
           );
-          navigate("/browse");
         })
         .catch((error) => {
           setErrorMessage(error.message);
@@ -62,12 +61,7 @@ function Loginn() {
         email.current.value,
         password.current.value,
       )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
-        })
+        .then((userCredential) => {})
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
